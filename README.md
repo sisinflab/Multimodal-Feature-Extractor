@@ -1,6 +1,6 @@
 # Image Feature Extractor
 
-This repository provides a Python implementation to extract visual features from images, by means of pretrained convolutional neural networks (e.g., ResNet50). The extracted features correspond to the output of either fully-connected or convolutional layers. This repository was exploited in the following papers:
+This repository provides a Python implementation to extract visual features from images, by means of pretrained convolutional neural networks (e.g., ResNet50). The extracted features correspond to the output of either fully-connected or convolutional layers. This repository was adopted in the following papers:
 
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs)
 
@@ -23,3 +23,15 @@ pip install -r requirements.txt
 ```
 
 ## Extract features
+
+To extract visual features from images, please run the following script:
+```
+python classify_extract.py \
+  --gpu <gpu-id>
+  --dataset <dataset-name> \
+  --model_name <list-of-cnns> \
+  --cnn_output_name <list-of-output-names-for-each-cnn> \
+  --cnn_output_shape <list-of-output-shapes-for-each-cnn> \
+  --category_dim <dimension-for-dimensionality-reduction> \
+  --print_each <print-status-each>
+```
