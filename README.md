@@ -2,7 +2,7 @@
 
 This repository provides a Python implementation to extract visual features from images, by means of pretrained convolutional neural networks (e.g., ResNet50). The extracted features correspond to the output of either fully-connected or convolutional layers.
 
-<br>This repository was adopted for the following papers:
+This repository was adopted for the following papers:
 
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs)
 
