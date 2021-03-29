@@ -40,10 +40,16 @@ python classify_extract.py \
   --print_each <print-status-each>
 ```
 ### Please notice
-The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name[0] --> VGG19```, ```cnn_output_name[0] --> fc2```, ```cnn_output_shape[0] --> ()```. Setting the output shape as ```()``` means no reshape is performed after extraction.
+The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name[0] --> VGG19```, ```cnn_output_name[0] --> fc2```, ```cnn_output_shape[0] --> ()```. Setting the output shape as ```()``` means no reshape is performed after extraction. Currently, the implemented dimensionality reduction is just PCA.
 
 ### Available CNNs
 - AlexNet ([PyTorch](https://pytorch.org/hub/pytorch_vision_alexnet/))
 - VGG19 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG19))
 - ResNet50 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet50))
 - ResNet152 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet152))
+
+### Outputs
+The script will generate several output files, namely:
+- ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
+- ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
+- ```category_features_<model_name>_<output_name>_pca<category_dim>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer, and reduction dimension.
