@@ -9,6 +9,8 @@ This repository was adopted for the following papers:
 **Table of Contents:**
 - [Requirements](#requirements)
 - [Extract features](#extract-features)
+  - [Please notice](#please-notice)
+  - [Available CNNs](#available-cnns)
 - [Evaluate visual recommendations](#evaluate-visual-recommendations)
 
 ## Requirements
@@ -40,7 +42,7 @@ python classify_extract.py \
 ### Please notice
 The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name[0] --> VGG19```, ```cnn_output_name[0] --> fc2```, ```cnn_output_shape[0] --> ()```. Setting the output shape as ```()``` means no reshape is performed after extraction.
 
-### Implemented CNNs
+### Available CNNs
 - AlexNet ([PyTorch](https://pytorch.org/hub/pytorch_vision_alexnet/))
 - VGG19 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG19))
 - ResNet50 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet50))
