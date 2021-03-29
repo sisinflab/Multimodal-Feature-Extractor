@@ -101,7 +101,10 @@ To run, the script requires the folder with the obtained recommendation results.
     VNPR.tsv
     ...
 ```
+where, each tsv file refers to the recommendation lists produced by the best performing configuration for each visual recommender.
 
 ### Outputs
 The script will generate the following outputs, namely:
-- 
+- ```./plots/<dataset-name>_<top-k>/<visual-recommender>/<image-feature-extractor>/u_<user-id>.pdf```, a set of pdf files having the t-SNE graphical representation of the **VisDiv** for each user
+- ```./plots/<dataset-name>_<top-k>/<visual-recommender>/<image-feature-extractor>/all_users_stats.csv```, a csv file to store all **VisDiv** values for each user
+- ```./plots/<dataset-name>_<top-k>/<visual-recommender>/<image-feature-extractor>/final_stats.out```, a txt file to store the final statistics for the **VisDiv** metric
