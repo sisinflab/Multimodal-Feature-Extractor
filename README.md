@@ -12,7 +12,10 @@ This repository was adopted for the following papers:
   - [Please notice](#please-notice)
   - [Available CNNs](#available-cnns)
   - [Available dimensionality reductions](#available-dimensionality-reductions)
+  - [Outputs](#outputs)
 - [Evaluate visual recommendations](#evaluate-visual-recommendations)
+  - [Expected inputs](#expected-inputs)
+  - [Outputs](#outputs-1)
 
 ## Requirements
 
