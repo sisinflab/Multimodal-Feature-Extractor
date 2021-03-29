@@ -42,7 +42,7 @@ Finally, you are supposed to structure the dataset folders in the following way:
         1.jpg
         ...
 ```
-**N.B.** The dataset folder structure requires the notation ```<dataset_name>_<cnn_name>```, even though the different datasets folder contain the exact same files. This is due to the fact that, when training visual-based recommender systems on these datasets, they need to be recognized as different datasets.
+**N.B.** The dataset folder structure requires the notation ```<dataset_name>_<cnn_name>```, even though the different dataset folders contain the exact same files. This is due to the fact that, when training visual-based recommender systems on these datasets through [Elliot](https://github.com/sisinflab/elliot), they need to be recognized as different datasets.
 
 ## Extract features
 
