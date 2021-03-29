@@ -29,19 +29,20 @@ pip install -r requirements.txt
 Finally, you are supposed to structure the dataset folders in the following way:
 ```
 ./data
-  amazon_baby/
+  amazon_baby_vgg19/
     original/
        images/
         0.jpg
         1.jpg
         ...
-  amazon_boys_girls/
+  amazon_boys_girls_alexnet/
     original/
       images/
         0.jpg
         1.jpg
         ...
 ```
+**N.B.** The dataset folder structure requires the notation ```<dataset_name>_<cnn_name>```, even though the different datasets folder contain the exact same files. This is due to the fact that, when training visual-based recommender systems on these datasets, they need to be recognized as different datasets.
 
 ## Extract features
 
@@ -87,3 +88,20 @@ python evaluate_visual_profile.py \
   --save_plots <whether-to-save-the-output-plots>
 ```
 
+### Expected inputs
+To run, the script requires the folder with the obtained recommendation results. It must be formatted in the following way:
+```
+./results/
+  amazon_baby_vgg19/
+    VBPR.tsv
+    DeepStyle.tsv
+    ...
+  amazon_boys_girls_resnet50/
+    ACF.tsv
+    VNPR.tsv
+    ...
+```
+
+### Outputs
+The script will generate the following outputs, namely:
+- 
