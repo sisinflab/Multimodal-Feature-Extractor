@@ -37,4 +37,4 @@ python classify_extract.py \
   --category_dim <dimension-for-dimensionality-reduction> \
   --print_each <print-status-each>
 ```
-**N.B.** the input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values in which there must exist a correspondance across all the lists, e.g., ```model_name\[0\] --> VGG19```, ```cnn_output_name\[0\] --> fc2```, ```cnn_output_shape\[0\] --> ()```. 
+**N.B.** the input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name\[0\] --> VGG19```, ```cnn_output_name\[0\] --> fc2```, ```cnn_output_shape\[0\] --> ()```. 
