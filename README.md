@@ -49,7 +49,7 @@ The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_
 - ResNet152 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet152))
 
 ### Outputs
-The script will generate several output files, namely:
+The script will generate three output files, namely:
 - ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
 - ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
 - ```category_features_<model_name>_<output_name>_pca<category_dim>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer, and reduction dimension.
