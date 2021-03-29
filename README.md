@@ -26,6 +26,22 @@ Then, install all required Python dependencies with the command:
 ```
 pip install -r requirements.txt
 ```
+Finally, you are supposed to structure the dataset folders in the following way:
+```
+./data
+  amazon_baby/
+    original/
+       images/
+        0.jpg
+        1.jpg
+        ...
+  amazon_boys_girls/
+    original/
+      images/
+        0.jpg
+        1.jpg
+        ...
+```
 
 ## Extract features
 
