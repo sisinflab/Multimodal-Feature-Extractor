@@ -101,7 +101,7 @@ To run, the script requires the folder with the obtained recommendation results.
     VNPR.tsv
     ...
 ```
-where, each tsv file refers to the recommendation lists produced by the best performing configuration for each visual recommender.
+where each tsv file refers to the recommendation lists produced by the best performing configuration for each visual recommender.
 
 ### Outputs
 The script will generate the following outputs, namely:
