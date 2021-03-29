@@ -76,3 +76,14 @@ The script will generate three output files, namely:
 
 ## Evaluate visual recommendations
 This section refers to the novel metric *visual diversity* (**VisDiv**), proposed in our paper [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs). 
+
+To calculate the **VisDiv**, please run the following script:
+```
+python evaluate_visual_profile.py \
+  --dataset <dataset-name> \
+  --image_feat_extractors <list-of-image-feature-extractors> \
+  --visual_recommenders <list-of-visual-recommenders> \
+  --top_k <top-k-to-calculate-visdiv-on> \
+  --save_plots <whether-to-save-the-output-plots>
+```
+
