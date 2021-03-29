@@ -9,7 +9,7 @@ This repository was adopted for the following papers:
 **Table of Contents:**
 - [Requirements](#requirements)
 - [Extract features](#extract-features)
-  - [Please notice](#please-notice)
+  - [Useful info](#useful-info)
   - [Available CNNs](#available-cnns)
   - [Available dimensionality reductions](#available-dimensionality-reductions)
   - [Outputs](#outputs)
@@ -60,7 +60,7 @@ python classify_extract.py \
   --category_dim <dimension-for-dimensionality-reduction> \
   --print_each <print-status-each>
 ```
-### Please notice
+### Useful info
 The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name[0] --> VGG19```, ```cnn_output_name[0] --> fc2```, ```cnn_output_shape[0] --> ()```. Setting the output shape as ```()``` means no reshape is performed after extraction.
 
 ### Available CNNs
