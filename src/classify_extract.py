@@ -50,7 +50,7 @@ import csv
 
 def classify_extract():
     for id_model, m in enumerate(args.model_name):
-        print('*****************************************************************')
+        print('****************************************************************')
         print('EXTRACTION MODEL: %s' % m)
         print('OUTPUT LAYER: %s' % args.cnn_output_name[id_model])
 
