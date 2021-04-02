@@ -18,14 +18,14 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 def parse_args():
     parser = argparse.ArgumentParser(description="Run classification and feature extraction for original images.")
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
-    parser.add_argument('--dataset', nargs='?', default='amazon_men', help='dataset path')
-    parser.add_argument('--model_name', nargs='+', type=str, default=['ResNet50'],
+    parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
+    parser.add_argument('--model_name', nargs='+', type=str, default=['ResNet50', 'ResNet50'],
                         help='model for feature extraction')
-    parser.add_argument('--cnn_output_name', nargs='+', default=['avg_pool'],
+    parser.add_argument('--cnn_output_name', nargs='+', default=['avg_pool', 'conv5_block3_out'],
                         help='output layer name')
-    parser.add_argument('--cnn_output_shape', nargs='+', type=tuple, default=[()],
+    parser.add_argument('--cnn_output_shape', nargs='+', type=tuple, default=[(), (49, 2048)],
                         help='output shape for cnn output (e.g., ACF)')
-    parser.add_argument('--cnn_output_split', nargs='+', type=bool, default=[True],
+    parser.add_argument('--cnn_output_split', nargs='+', type=bool, default=[True, True],
                         help='whether output should be split')
     parser.add_argument('--category_dim', type=int, default=128, help='dimensionality reduction for category')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
@@ -66,7 +66,8 @@ def classify_extract():
             if not os.path.exists(cnn_features_pca_dir.format(args.dataset,
                                                               m.lower(),
                                                               str(args.cnn_output_name[id_model]),
-                                                              args.category_dim)):
+                                                              args.category_dim)) and not len(
+                    args.cnn_output_shape[id_model]):
                 os.makedirs(cnn_features_pca_dir.format(args.dataset,
                                                         m.lower(),
                                                         str(args.cnn_output_name[id_model]),
@@ -141,9 +142,9 @@ def classify_extract():
                                                           m.lower(),
                                                           str(args.cnn_output_name[id_model])))
                 print('Saved cnn features reshaped numpy to ==> %s' %
-                      cnn_features.format(args.dataset,
-                                          m.lower(),
-                                          str(args.cnn_output_name[id_model])))
+                      cnn_features_path.format(args.dataset,
+                                               m.lower(),
+                                               str(args.cnn_output_name[id_model])))
 
         # if no reshape is applied to cnn features
         else:
@@ -168,7 +169,7 @@ def classify_extract():
             cnn_features_pca = cnn_model.pca_reduction(cnn_features)
             if args.cnn_output_split[id_model]:
                 for d in range(data.num_samples):
-                    save_np(npy=cnn_features[d],
+                    save_np(npy=cnn_features_pca[d],
                             filename=cnn_features_pca_dir.format(args.dataset,
                                                                  m.lower(),
                                                                  str(args.cnn_output_name[id_model]),
