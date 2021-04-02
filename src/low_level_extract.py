@@ -12,7 +12,7 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run low-level feature extraction for original images.")
-    parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
+    parser.add_argument('--dataset', nargs='?', default='amazon_men', help='dataset path')
     parser.add_argument('--num_bins', type=int, default=8, help='number of bins for color histogram')
     parser.add_argument('--low_level_output_split', type=bool, default=True, help='whether output should be split')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')

@@ -18,7 +18,7 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 def parse_args():
     parser = argparse.ArgumentParser(description="Run classification and feature extraction for original images.")
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
-    parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
+    parser.add_argument('--dataset', nargs='?', default='amazon_men', help='dataset path')
     parser.add_argument('--model_name', nargs='+', type=str, default=['ResNet50', 'ResNet50'],
                         help='model for feature extraction')
     parser.add_argument('--cnn_output_name', nargs='+', default=['avg_pool', 'conv5_block3_out'],
