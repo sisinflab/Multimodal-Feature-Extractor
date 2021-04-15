@@ -4,7 +4,7 @@ This repository provides a Python implementation to extract visual features from
 
 This repository was adopted for the following papers:
 
-- [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (under review)](https://github.com/sisinflab/CNNs-in-VRSs)
+- [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (accepted at CVFAD@CVPR2021)](https://github.com/sisinflab/CNNs-in-VRSs)
 
 **Table of Contents:**
 - [Requirements](#requirements)
