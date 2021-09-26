@@ -5,7 +5,7 @@ This repository provides a Python implementation to extract visual features from
 This repository was adopted for the following papers:
 
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (accepted at CVFAD@CVPR2021)](https://github.com/sisinflab/CNNs-in-VRSs)
-- [V-ELLIOT: Design, Evaluate and Tune Visual Recommender Systems (accepted at RecSys2021](https://github.com/sisinflab/elliot)
+- [V-ELLIOT: Design, Evaluate and Tune Visual Recommender Systems (accepted at RecSys2021)](https://github.com/sisinflab/elliot)
 
 **Table of Contents:**
 - [Requirements](#requirements)
