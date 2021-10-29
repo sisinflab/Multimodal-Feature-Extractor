@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 Finally, you are supposed to structure the dataset folders in the following way:
 ```
-# VISUAL DATA
+# EXAMPLE VISUAL DATA
 ./data
   amazon_baby/
     original/
@@ -47,7 +47,8 @@ Finally, you are supposed to structure the dataset folders in the following way:
         0.jpg
         1.jpg
         ...
-# TEXTUAL DATA
+        
+# EXAMPLE TEXTUAL DATA
 ./data
   amazon_baby
     original/
@@ -59,9 +60,10 @@ Finally, you are supposed to structure the dataset folders in the following way:
 
 ## Extract features
 
+### Visual Features
 To extract visual features from images, please run the following script:
 ```
-python classify_extract.py \
+python classify_extract_visual.py \
   --gpu <gpu-id>
   --dataset <dataset-name> \
   --model_name <list-of-cnns> \
@@ -70,19 +72,19 @@ python classify_extract.py \
   --category_dim <dimension-for-dimensionality-reduction> \
   --print_each <print-status-each>
 ```
-### Useful info
+#### Useful info
 The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_shape``` are lists of values for whom there must exist a correspondence across all the lists, e.g., ```model_name[0] --> VGG19```, ```cnn_output_name[0] --> fc2```, ```cnn_output_shape[0] --> ()```. Setting the output shape as ```()``` means no reshape is performed after extraction.
 
-### Available CNNs
+#### Available CNNs
 - AlexNet ([PyTorch](https://pytorch.org/hub/pytorch_vision_alexnet/))
 - VGG19 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG19))
 - ResNet50 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet50))
 - ResNet152 ([Keras](https://www.tensorflow.org/api_docs/python/tf/keras/applications/ResNet152))
 
-### Available dimensionality reductions
+#### Available dimensionality reductions
 - Principal Component Analysis (PCA)
 
-### Outputs
+#### Outputs
 The script will generate three output files, namely:
 - ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
 - ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
