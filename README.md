@@ -93,9 +93,9 @@ The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_
 The script will generate three output files, namely:
 - ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
 - ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
-- ```category_features_<model_name>_<output_name>_pca<category_dim>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer, and reduction dimension.
+- ```cnn_features_<model_name>_<output_name>_pca<dim>.npy```, a npy file with the extracted features for the input images, the adopted model, extraction layer, and reduction dimension.
 
-**N.B.** Depending on how you set the argument ```--cnn_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted visual feature (in this case, they will be stored to the directory ```cnn_features_<model_name>_<output_name>/``` or ```category_features_<model_name>_<output_name>_pca<category_dim>/```).
+**N.B.** Depending on how you set the argument ```--cnn_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted visual feature (in this case, they will be stored to the directory ```cnn_features_<model_name>_<output_name>/``` or ```cnn_features_<model_name>_<output_name>_pca<dim>/```).
 
 ### Textual features
 To extract textual features from texts, please run the following script:
@@ -114,9 +114,9 @@ Please, refer to [SentenceTransformers](https://www.sbert.net/) for an indicatio
 
 #### Outputs
 The script will generate three output files, namely:
-- ```textual_features_<model_name>.npy```, a npy file with the extracted features for the input texts and the adopted model
+- ```text_features_<model_name>.npy```, a npy file with the extracted features for the input texts and the adopted model
 
-**N.B.** Depending on how you set the argument ```--text_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted textual feature (in this case, they will be stored to the directory ```textual_features_<model_name>/```).
+**N.B.** Depending on how you set the argument ```--text_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted textual feature (in this case, they will be stored to the directory ```text_features_<model_name>/```).
 
 ## Evaluate visual recommendations
 This section refers to the novel metric *visual diversity* (**VisDiv**), proposed in our paper [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs). 
