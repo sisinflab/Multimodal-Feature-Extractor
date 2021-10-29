@@ -116,6 +116,8 @@ Please, refer to [SentenceTransformers](https://www.sbert.net/) for an indicatio
 The script will generate three output files, namely:
 - ```textual_features_<model_name>.npy```, a npy file with the extracted features for the input texts and the adopted model
 
+**N.B.** Depending on how you set the argument ```--text_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted textual feature (in this case, they will be stored to the directory ```textual_features_<model_name>/```).
+
 ## Evaluate visual recommendations
 This section refers to the novel metric *visual diversity* (**VisDiv**), proposed in our paper [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs). 
 
