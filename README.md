@@ -14,7 +14,10 @@ This repository was used in:
       - [Useful info](#useful-info)
       - [Available CNNs](#available-cnns)
       - [Available dimensionality reductions](#available-dimensionality-reductions)
-      - [Outputs](#outputs)
+      - [Outputs](#outputs-1)
+  - [Textual features](#textual-features)
+      - [Available textual encoders](#available-cnns)
+      - [Outputs](#outputs-2)
 - [Evaluate visual recommendations](#evaluate-visual-recommendations)
   - [Expected inputs](#expected-inputs)
   - [Outputs](#outputs-1)
@@ -61,8 +64,8 @@ Finally, you are supposed to structure the dataset folders in the following way:
 
 ## Extract features
 
-### Visual Features
-To extract visual features from images, please run the following script:
+### Visual features
+To classify images and extract visual features from them, please run the following script:
 ```
 python classify_extract_visual.py \
   --gpu <gpu-id>
@@ -70,6 +73,7 @@ python classify_extract_visual.py \
   --model_name <list-of-cnns> \
   --cnn_output_name <list-of-output-names-for-each-cnn> \
   --cnn_output_shape <list-of-output-shapes-for-each-cnn> \
+  --cnn_output_split <whether-to-store-separately-output-features-or-not> \
   --category_dim <dimension-for-dimensionality-reduction> \
   --print_each <print-status-each>
 ```
@@ -90,6 +94,25 @@ The script will generate three output files, namely:
 - ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
 - ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
 - ```category_features_<model_name>_<output_name>_pca<category_dim>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer, and reduction dimension.
+
+### Textual features
+To extract textual features from texts, please run the following script:
+```
+python extract_textual.py \
+  --gpu <gpu-id>
+  --dataset <dataset-name> \
+  --model_name <list-of-textual-encoders> \
+  --text_output_split <whether-to-store-separately-output-features-or-not>
+  --column <column-to-encode>
+  --print_each <print-status-each>
+```
+
+#### Available textual encoders
+Please, refer to [SentenceTransformers](https://www.sbert.net/) for an indication of the available pre-trained models.
+
+#### Outputs
+The script will generate three output files, namely:
+- ```textual_features_<model_name>.npy```, a npy file with the extracted features for the input texts and the adopted model
 
 ## Evaluate visual recommendations
 This section refers to the novel metric *visual diversity* (**VisDiv**), proposed in our paper [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems](https://github.com/sisinflab/CNNs-in-VRSs). 
