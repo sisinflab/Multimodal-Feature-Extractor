@@ -92,8 +92,10 @@ The input parameters ```model_name```, ```cnn_output_name```, and ```cnn_output_
 #### Outputs
 The script will generate three output files, namely:
 - ```classes_<model_name>.csv```, a csv file with the classification outcomes for the input images and the adopted model
-- ```cnn_features_<model_name>_<output_name>.npy```*, a npy file with the extracted features for the input images, the adopted model and extraction layer
+- ```cnn_features_<model_name>_<output_name>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer
 - ```category_features_<model_name>_<output_name>_pca<category_dim>.npy```, a npy file with the extracted features for the input images, the adopted model and extraction layer, and reduction dimension.
+
+**N.B.** Depending on how you set the argument ```--cnn_output_split```, you may store a unique numpy array (see above), or different numpy arrays, one for each extracted visual feature (in this case, they will be stored to the directory ```cnn_features_<model_name>_<output_name>/``` or ```category_features_<model_name>_<output_name>_pca<category_dim>/```).
 
 ### Textual features
 To extract textual features from texts, please run the following script:
