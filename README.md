@@ -1,8 +1,8 @@
-# Image Feature Extractor
+# Multimodal Feature Extractor
 
-This repository provides a Python implementation to extract visual features from images, by means of pretrained convolutional neural networks (e.g., ResNet50). The extracted features correspond to the output of either fully-connected or convolutional layers.
+This repository provides a Python implementation to extract multimodal features from images and texts, either high-level ones from pretrained deep learning models (e.g., CNNs-extracted embeddings), or low-level ones (e.g., color and shape).
 
-This repository was adopted for the following papers:
+This repository was used in:
 
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (accepted at CVFAD@CVPR2021)](https://github.com/sisinflab/CNNs-in-VRSs)
 - [V-Elliot: Design, Evaluate and Tune Visual Recommender Systems (accepted at RecSys2021)](https://github.com/sisinflab/elliot)
