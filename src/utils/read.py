@@ -3,14 +3,15 @@ import pickle
 import numpy as np
 
 
-def read_csv(filename):
+def read_csv(filename, sep=','):
     """
     Args:
         filename (str): csv file path
+        sep (str): separator
     Return:
          A pandas dataframe.
     """
-    df = pd.read_csv(filename, index_col=False)
+    df = pd.read_csv(filename, sep=sep, index_col=False)
     return df
 
 
