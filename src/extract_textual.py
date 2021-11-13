@@ -60,7 +60,7 @@ def extract():
 
         for index, row in data.iterrows():
             # text features extraction
-            text_features[index] = text_model.encode(sentences=row[args.column])
+            text_features[index] = text_model.encode(sentences=str(row[args.column]))
 
             if (index + 1) % args.print_each == 0:
                 sys.stdout.write('\r%d/%d samples completed' % (index + 1, len(data)))
