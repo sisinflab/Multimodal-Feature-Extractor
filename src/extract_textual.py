@@ -69,6 +69,8 @@ def extract():
         end = time.time()
         print('\n\nFeature extraction completed in %f seconds.' % (end - start))
 
+        text_features = text_features / np.max(np.abs(text_features))
+
         if args.text_output_split[id_model]:
             for d in range(len(data)):
                 save_np(npy=text_features[d],
