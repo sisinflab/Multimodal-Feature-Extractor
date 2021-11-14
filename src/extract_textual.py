@@ -13,6 +13,7 @@ def parse_args():
                         help='model for feature extraction')
     parser.add_argument('--text_output_split', nargs='+', type=bool, default=[True],
                         help='whether output should be split')
+    parser.add_argument('--normalize', type=bool, default=True, help='whether to normalize output or not')
     parser.add_argument('--column', nargs='?', default='DESCRIPTION', help='column of the dataframe to encode')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
 
@@ -69,7 +70,8 @@ def extract():
         end = time.time()
         print('\n\nFeature extraction completed in %f seconds.' % (end - start))
 
-        text_features = text_features / np.max(np.abs(text_features))
+        if args.normalize:
+            text_features = text_features / np.max(np.abs(text_features))
 
         if args.text_output_split[id_model]:
             for d in range(len(data)):
