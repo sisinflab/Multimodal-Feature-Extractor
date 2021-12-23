@@ -52,3 +52,5 @@ urllib3==1.26.4
 Werkzeug==1.0.1
 wrapt==1.12.1
 zipp==3.4.1
+gensim~=4.1.2
+nltk~=3.6.5

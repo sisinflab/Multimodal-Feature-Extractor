@@ -8,13 +8,13 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 def parse_args():
     parser = argparse.ArgumentParser(description="Run feature extraction for original texts.")
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
-    parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
+    parser.add_argument('--dataset', nargs='?', default='amazon_boys_girls', help='dataset path')
     parser.add_argument('--model_name', nargs='+', type=str, default=['all-mpnet-base-v2'],
                         help='model for feature extraction')
     parser.add_argument('--text_output_split', nargs='+', type=bool, default=[True],
                         help='whether output should be split')
     parser.add_argument('--normalize', type=bool, default=True, help='whether to normalize output or not')
-    parser.add_argument('--column', nargs='?', default='DESCRIPTION', help='column of the dataframe to encode')
+    parser.add_argument('--column', nargs='?', default='REVIEW', help='column of the dataframe to encode')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
 
     return parser.parse_args()
@@ -47,8 +47,8 @@ def extract():
         text_model = SentenceTransformer(args.model_name[id_model])
 
         # dataset setting
-        data = read_csv(descriptions_path.format(args.dataset), sep='\t')
-        print('Loaded dataset from %s' % descriptions_path.format(args.dataset))
+        data = read_csv(reviews_path.format(args.dataset), sep='\t')
+        print('Loaded dataset from %s' % reviews_path.format(args.dataset))
 
         # text features
         text_features = np.empty(

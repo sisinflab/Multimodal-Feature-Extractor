@@ -4,7 +4,9 @@ imagenet_classes_path = '../data/imagenet_classes.txt'
 original = data_path + 'original/'
 images_path = original + 'images/'
 classes_path = original + 'classes_{1}.csv'
-descriptions_path = original + 'all_items_descriptions.tsv'
+reviews_path = original + 'train_reviews.tsv'
+reviews_output_path = original + 'train_reviews_tokens.tsv'
+
 
 # HIGH-LEVEL VISUAL FEATURES
 cnn_features_path = original + 'cnn_features_{1}_{2}.npy'
@@ -14,7 +16,9 @@ cnn_features_pca_dir = original + 'cnn_features_{1}_{2}_pca{3}/'
 
 # HIGH-LEVEL TEXTUAL FEATURES
 text_features_path = original + 'text_features_{1}.npy'
+text_words_features_path = original + 'text_words_features_{1}.npy'
 text_features_dir = original + 'text_features_{1}/'
+text_words_features_dir = original + 'text_words_features_{1}/'
 
 # LOW-LEVEL VISUAL FEATURES
 shape_features_dir = original + 'shapes/'

@@ -2,13 +2,14 @@ import numpy as np
 import pickle
 
 
-def write_csv(df, filename):
+def write_csv(df, filename, sep):
     """
     Args:
         df: pandas dataframe to write
         filename (str): path to store the dataframe
+        sep: separator
     """
-    df.to_csv(filename, index=False)
+    df.to_csv(filename, index=False, sep=sep)
 
 
 def save_obj(obj, name):
