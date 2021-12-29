@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument('--normalize', type=bool, default=True, help='whether to normalize output or not')
     parser.add_argument('--padding', type=str, default='max', help='padding method to adopt')
     parser.add_argument('--column', nargs='?', default='REVIEW', help='column of the dataframe to encode')
+    parser.add_argument('--items', nargs='?', default='ASIN', help='column of the dataframe for the items')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
 
     return parser.parse_args()
@@ -75,13 +76,16 @@ def extract():
 
         data['TOKENS_POSITION'] = data['TOKENS'].apply(lambda x, voc=final_vocabulary: find_indices_vocabulary(x, voc))
 
+        data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS', 'num_tokens'], inplace=True)
+
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
+        print('Data has been written to tsv file!')
 
         len_data = len(data)
         del data
 
         # text words features
-        text_words_features_vocabulary = np.zeros(
+        text_words_features_vocabulary = np.empty(
             shape=[len(final_vocabulary), word2vec_model.vector_size]
         )
 
