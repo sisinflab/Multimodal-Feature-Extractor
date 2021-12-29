@@ -77,6 +77,9 @@ def extract():
 
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
 
+        len_data = len(data)
+        del data
+
         # text words features
         text_words_features_vocabulary = np.zeros(
             shape=[len(final_vocabulary), word2vec_model.vector_size]
@@ -104,7 +107,7 @@ def extract():
                 np.abs(text_words_features_vocabulary))
 
         if args.text_output_split[id_model]:
-            for d in range(len(data)):
+            for d in range(len_data):
                 save_np(npy=text_words_features_vocabulary[d],
                         filename=text_words_features_dir.format(args.dataset, m.lower()) + str(d) + '.npy')
             print('Saved text vocabulary words features numpy to ==> %s' %
