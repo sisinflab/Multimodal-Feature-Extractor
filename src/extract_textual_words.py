@@ -1,5 +1,6 @@
 import os
 import argparse
+import csv
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
@@ -69,16 +70,24 @@ def extract():
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
         data['num_tokens'] = data['TOKENS'].map(lambda x: len(x.split(' ')))
         max_num_tokens = data['num_tokens'].max()
-        data['TOKENS'] = data['TOKENS'].apply(lambda x, max_num=max_num_tokens: pad(x, max_num))
+        data['TOKENS'] = data['TOKENS'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         print('The dataset has been padded!')
 
         final_vocabulary = list(set(vocabulary)) + ['<pad>']
 
-        data['TOKENS_POSITION'] = data['TOKENS'].apply(lambda x, voc=final_vocabulary: find_indices_vocabulary(x, voc))
+        print('Starting tokens position calculation...')
+        data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary: find_indices_vocabulary(x, voc))
+        print('Tokens position calculation has ended!')
 
-        data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS', 'num_tokens'], inplace=True)
+        columns = data.columns
+        data = data.to_dict('records')
 
-        write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
+        print('Starting to write to tsv  file...')
+        with open(reviews_output_path.format(args.dataset), 'w', newline='') as f:
+            writer = csv.writer(f, delimiter='\t')
+            writer.writerow(columns)
+            writer.writerows(data)
+        # write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
         len_data = len(data)
