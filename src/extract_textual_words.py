@@ -83,6 +83,8 @@ def extract():
         print('Tokens position calculation has ended!')
 
         print('Starting to write to tsv file...')
+        data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS',
+                           'num_tokens'], inplace=True)
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
