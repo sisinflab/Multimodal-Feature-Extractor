@@ -70,6 +70,7 @@ def extract():
         # dataset padding
         data = read_csv(reviews_path.format(args.dataset), sep='\t')
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
+        print(data[type(data['tokens']) == float]['review'])
         data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
         max_num_tokens = data['num_tokens'].max()
         data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
