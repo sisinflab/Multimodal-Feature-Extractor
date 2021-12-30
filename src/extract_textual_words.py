@@ -78,9 +78,6 @@ def extract():
         final_vocabulary.add('<pad>')
         final_vocabulary_dict = dict.fromkeys(final_vocabulary, range(len(vocabulary) + 1))
 
-        del final_vocabulary
-        del vocabulary
-
         print('Starting tokens position calculation...')
         data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
