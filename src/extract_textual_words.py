@@ -1,5 +1,6 @@
 import os
 import argparse
+import csv
 
 from operator import itemgetter
 
@@ -85,7 +86,14 @@ def extract():
         print('Starting to write to tsv file...')
         data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS',
                            'num_tokens'], inplace=True)
-        write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
+
+        columns = data.columns
+        data = data.to_dict('records')
+        with open(reviews_output_path.format(args.dataset), 'w', newline='') as f:
+            writer = csv.writer(f, delimiter='\t')
+            writer.writerow(columns)
+            writer.writerows(data)
+        # write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
         len_data = len(data)
