@@ -70,16 +70,16 @@ def extract():
         # dataset padding
         data = read_csv(reviews_path.format(args.dataset), sep='\t')
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
-        data['num_tokens'] = data['TOKENS'].map(lambda x: len(x.split(' ')))
+        data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
         max_num_tokens = data['num_tokens'].max()
-        data['TOKENS'] = data['TOKENS'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
+        data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         print('The dataset has been padded!')
 
         final_vocabulary = list(set(vocabulary)) + ['<pad>']
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
-        data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
+        data['TOKENS_POSITION'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
 
         print('Starting to write to tsv file...')
