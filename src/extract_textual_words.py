@@ -1,6 +1,7 @@
 import os
 import argparse
-import csv
+
+from operator import itemgetter
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
@@ -49,7 +50,7 @@ def pad(tokens, max_number):
 
 
 def find_indices_vocabulary(tokens, voc):
-    return [len(voc) - 1 if t == '<pad>' else voc.index(t) for t in tokens]
+    return itemgetter(*tokens)(voc)
 
 
 def extract():
@@ -73,21 +74,19 @@ def extract():
         data['TOKENS'] = data['TOKENS'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         print('The dataset has been padded!')
 
-        final_vocabulary = list(set(vocabulary)) + ['<pad>']
+        final_vocabulary = set(vocabulary)
+        final_vocabulary.add('<pad>')
+        final_vocabulary_dict = dict.fromkeys(final_vocabulary, range(len(vocabulary) + 1))
+
+        del final_vocabulary
+        del vocabulary
 
         print('Starting tokens position calculation...')
-        data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary: find_indices_vocabulary(x, voc))
+        data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
 
-        columns = data.columns
-        data = data.to_dict('records')
-
         print('Starting to write to tsv file...')
-        with open(reviews_output_path.format(args.dataset), 'w', newline='') as f:
-            writer = csv.writer(f, delimiter='\t')
-            writer.writerow(columns)
-            writer.writerows(data)
-        # write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
+        write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
         len_data = len(data)
@@ -95,21 +94,21 @@ def extract():
 
         # text words features
         text_words_features_vocabulary = np.empty(
-            shape=[len(final_vocabulary), word2vec_model.vector_size]
+            shape=[len(list(final_vocabulary_dict.keys())), word2vec_model.vector_size]
         )
 
         # features extraction
         print('Starting vocabulary embedding extraction...\n')
         start = time.time()
 
-        for idx, v in enumerate(final_vocabulary):
+        for idx, v in enumerate(list(final_vocabulary_dict.keys())):
             try:
                 text_words_features_vocabulary[idx] = word2vec_model.get_vector(v, norm=True)
             except KeyError:
                 pass
 
             if (idx + 1) % args.print_each == 0:
-                sys.stdout.write('\r%d/%d samples completed' % (idx + 1, len(final_vocabulary)))
+                sys.stdout.write('\r%d/%d samples completed' % (idx + 1, len(list(final_vocabulary_dict.keys()))))
                 sys.stdout.flush()
 
         end = time.time()
