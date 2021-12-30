@@ -51,7 +51,7 @@ def pad(tokens, max_number):
 
 
 def find_indices_vocabulary(tokens, voc):
-    return itemgetter(*tokens)(voc)
+    return list(itemgetter(*tokens)(voc))
 
 
 def extract():
@@ -75,9 +75,8 @@ def extract():
         data['TOKENS'] = data['TOKENS'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         print('The dataset has been padded!')
 
-        final_vocabulary = set(vocabulary)
-        final_vocabulary.add('<pad>')
-        final_vocabulary_dict = dict.fromkeys(final_vocabulary, range(len(vocabulary) + 1))
+        final_vocabulary = list(set(vocabulary)) + ['<pad>']
+        final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
         data['TOKENS_POSITION'] = data['TOKENS'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
@@ -85,7 +84,7 @@ def extract():
 
         print('Starting to write to tsv file...')
         data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS',
-                           'num_tokens'], inplace=True)
+                           'num_tokens', 'URL'], inplace=True)
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
