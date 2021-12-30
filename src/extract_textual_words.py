@@ -82,7 +82,7 @@ def extract():
         columns = data.columns
         data = data.to_dict('records')
 
-        print('Starting to write to tsv  file...')
+        print('Starting to write to tsv file...')
         with open(reviews_output_path.format(args.dataset), 'w', newline='') as f:
             writer = csv.writer(f, delimiter='\t')
             writer.writerow(columns)
