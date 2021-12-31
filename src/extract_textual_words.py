@@ -72,15 +72,18 @@ def extract():
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
         data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
         max_num_tokens = data['num_tokens'].max()
-        data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
-        print('The dataset has been padded!')
+        # data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
+        # print('The dataset has been padded!')
 
-        final_vocabulary = list(set(vocabulary)) + ['<pad>']
+        # final_vocabulary = list(set(vocabulary)) + ['<pad>']
+        final_vocabulary = list(set(vocabulary))
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
         data['TOKENS_POSITION'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
+
+        final_vocabulary_dict['<pad>'] = len(final_vocabulary)
 
         print('Starting to write to tsv file...')
         if args.dataset == 'amazon_men':
@@ -93,7 +96,7 @@ def extract():
         del data
 
         # text words features
-        text_words_features_vocabulary = np.empty(
+        text_words_features_vocabulary = np.zeros(
             shape=[len(list(final_vocabulary_dict.keys())), word2vec_model.vector_size]
         )
 
