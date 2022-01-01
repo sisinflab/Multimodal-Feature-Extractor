@@ -17,9 +17,6 @@ def parse_args():
     parser.add_argument('--text_output_split', nargs='+', type=bool, default=[False],
                         help='whether output should be split')
     parser.add_argument('--normalize', type=bool, default=True, help='whether to normalize output or not')
-    parser.add_argument('--padding', type=str, default='max', help='padding method to adopt')
-    parser.add_argument('--column', nargs='?', default='REVIEW', help='column of the dataframe to encode')
-    parser.add_argument('--items', nargs='?', default='ASIN', help='column of the dataframe for the items')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
 
     return parser.parse_args()
@@ -40,14 +37,14 @@ import sys
 
 vocabulary = []
 
-
-def pad(tokens, max_number):
-    tokens_list = tokens.split(' ')
-    for t in tokens_list:
-        vocabulary.append(t)
-    if len(tokens_list) < max_number:
-        tokens_list += (['<pad>'] * (max_number - len(tokens_list)))
-    return tokens_list
+#
+# def pad(tokens, max_number):
+#     tokens_list = tokens.split(' ')
+#     for t in tokens_list:
+#         vocabulary.append(t)
+#     if len(tokens_list) < max_number:
+#         tokens_list += (['<pad>'] * (max_number - len(tokens_list)))
+#     return tokens_list
 
 
 def find_indices_vocabulary(tokens, voc):
@@ -81,15 +78,13 @@ def extract():
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
-        data['TOKENS_POSITION'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
+        data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
 
         final_vocabulary_dict['<pad>'] = len(final_vocabulary)
 
         print('Starting to write to tsv file...')
-        if args.dataset == 'amazon_men':
-            data.drop(columns=['USER', args.items, 'RATING', 'TIME', args.column, 'CATEGORY', 'DESCRIPTION', 'TOKENS',
-                               'num_tokens', 'URL'], inplace=True)
+        data = data[['USER_ID', 'ITEM_ID', 'tokens', 'tokens_position', 'num_tokens']]
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
