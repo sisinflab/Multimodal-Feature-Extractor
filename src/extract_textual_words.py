@@ -112,6 +112,7 @@ def extract():
 
         for idx, v in enumerate(list(final_vocabulary_dict.keys())):
             try:
+                print('ciao')
                 text_words_features_vocabulary[idx] = word2vec_model.get_vector(v, norm=True)
             except KeyError:
                 pass
