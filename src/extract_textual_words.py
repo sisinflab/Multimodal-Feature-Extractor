@@ -54,8 +54,7 @@ def create_vocabulary(tokens):
 
 
 def find_indices_vocabulary(tokens, voc):
-    print(tokens)
-    return list(itemgetter(*tokens)(voc))
+    return list(itemgetter(*tokens.split(' '))(voc))
 
 
 def extract():
