@@ -37,7 +37,6 @@ import sys
 
 vocabulary = []
 
-#
 # def pad(tokens, max_number):
 #     tokens_list = tokens.split(' ')
 #     for t in tokens_list:
@@ -45,6 +44,13 @@ vocabulary = []
 #     if len(tokens_list) < max_number:
 #         tokens_list += (['<pad>'] * (max_number - len(tokens_list)))
 #     return tokens_list
+
+
+def create_vocabulary(tokens):
+    tokens_list = tokens.split(' ')
+    for t in tokens_list:
+        vocabulary.append(t)
+    return len(tokens_list)
 
 
 def find_indices_vocabulary(tokens, voc):
@@ -67,7 +73,8 @@ def extract():
         # dataset padding
         data = read_csv(reviews_path.format(args.dataset), sep='\t')
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
-        data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
+        # data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
+        data['num_tokens'] = data['tokens'].map(lambda x: create_vocabulary(x))
         max_num_tokens = data['num_tokens'].max()
         print('Max num of tokens: %d' % max_num_tokens)
         # data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
