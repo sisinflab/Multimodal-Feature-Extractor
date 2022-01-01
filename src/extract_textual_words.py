@@ -85,7 +85,7 @@ def extract():
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
-        data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, list(voc.keys())))
+        data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x.split(' '), voc))
         print('Tokens position calculation has ended!')
 
         final_vocabulary_dict['<pad>'] = len(final_vocabulary)
