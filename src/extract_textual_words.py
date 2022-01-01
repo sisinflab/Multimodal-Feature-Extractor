@@ -54,8 +54,8 @@ def create_vocabulary(tokens):
 
 
 def find_indices_vocabulary(tokens, voc):
-    if len(tokens.split(' ')) == 1:
-        return list(voc[tokens[0]])
+    if ' ' not in tokens:
+        return list(voc[tokens])
     else:
         return list(itemgetter(*tokens.split(' '))(voc))
 
