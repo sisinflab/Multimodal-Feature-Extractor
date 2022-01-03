@@ -78,7 +78,7 @@ def extract():
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
         # data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
         data['num_tokens'] = data['tokens'].map(lambda x: create_vocabulary(x))
-        max_num_tokens = data['num_tokens'].max()
+        max_num_tokens = int(data['num_tokens'].max())
         print('Max num of tokens: %d' % max_num_tokens)
         # data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         # print('The dataset has been padded!')
@@ -88,6 +88,9 @@ def extract():
 
         print('Starting tokens position calculation...')
         data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
+        data['tokens_position'] = data.apply(
+            lambda x: x['tokens_position'] + ([len(final_vocabulary) - 1] * (max_num_tokens - int(x['num_tokens']))),
+            axis=1)
         print('Tokens position calculation has ended!')
 
         print('Starting to write to tsv file...')
