@@ -83,15 +83,12 @@ def extract():
         # data['tokens'] = data['tokens'].map(lambda x, max_num=max_num_tokens: pad(x, max_num))
         # print('The dataset has been padded!')
 
-        # final_vocabulary = list(set(vocabulary)) + ['<pad>']
-        final_vocabulary = list(set(vocabulary))
+        final_vocabulary = list(set(vocabulary)) + ['<pad>']
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
         data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
-
-        final_vocabulary_dict['<pad>'] = len(final_vocabulary)
 
         print('Starting to write to tsv file...')
         data = data[['USER_ID', 'ITEM_ID', 'tokens', 'tokens_position', 'num_tokens']]
@@ -110,7 +107,7 @@ def extract():
         print('Starting vocabulary embedding extraction...\n')
         start = time.time()
 
-        for idx, v in enumerate(list(final_vocabulary_dict.keys())):
+        for v, idx in final_vocabulary_dict.items():
             try:
                 text_words_features_vocabulary[idx] = word2vec_model.get_vector(v, norm=True)
             except KeyError:
