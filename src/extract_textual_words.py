@@ -88,9 +88,6 @@ def extract():
 
         print('Starting tokens position calculation...')
         data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
-        data['tokens_position'] = data.apply(
-            lambda x: x['tokens_position'] + ([len(final_vocabulary) - 1] * (max_num_tokens - int(x['num_tokens']))),
-            axis=1)
         print('Tokens position calculation has ended!')
 
         print('Starting to write to tsv file...')
