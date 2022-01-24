@@ -1,6 +1,7 @@
 import os
 import argparse
 import csv
+import json
 
 from operator import itemgetter
 
@@ -84,6 +85,7 @@ def extract():
         # print('The dataset has been padded!')
 
         final_vocabulary = list(set(vocabulary)) + ['<pad>']
+        padding_index = len(final_vocabulary) - 1
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
@@ -95,8 +97,28 @@ def extract():
         write_csv(data, reviews_output_path.format(args.dataset), sep='\t')
         print('Data has been written to tsv file!')
 
+        users_tokens = {}
+        items_tokens = {}
+        for u in list(data['USER_ID'].unique):
+            list_of_lists = data[data['USER_ID'] == u]['tokens_position']
+            list_of_tokens = [item for sublist in list_of_lists for item in sublist]
+            list_of_tokens_padded = list_of_tokens + ([padding_index] * max_num_tokens)
+            users_tokens[str(u)] = list_of_tokens_padded
+
+        for i in list(data['ITEM_ID'].unique):
+            list_of_lists = data[data['ITEM_ID'] == i]['tokens_position']
+            list_of_tokens = [item for sublist in list_of_lists for item in sublist]
+            list_of_tokens_padded = list_of_tokens + ([padding_index] * max_num_tokens)
+            items_tokens[str(i)] = list_of_tokens_padded
+
+        with open('../data/{0}/users_tokens.json'.format(args.dataset), 'w') as f:
+            json.dump(users_tokens, f)
+
+        with open('../data/{0}/items_tokens.json'.format(args.dataset), 'w') as f:
+            json.dump(items_tokens, f)
+
         len_data = len(data)
-        del data
+        del data, users_tokens, items_tokens
 
         # text words features
         text_words_features_vocabulary = np.zeros(
