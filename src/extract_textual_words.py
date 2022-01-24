@@ -99,13 +99,13 @@ def extract():
 
         users_tokens = {}
         items_tokens = {}
-        for u in data['USER_ID'].unique.to_list():
+        for u in data['USER_ID'].unique.tolist():
             list_of_lists = data[data['USER_ID'] == u]['tokens_position']
             list_of_tokens = [item for sublist in list_of_lists for item in sublist]
             list_of_tokens_padded = list_of_tokens + ([padding_index] * max_num_tokens)
             users_tokens[str(u)] = list_of_tokens_padded
 
-        for i in data['ITEM_ID'].unique.to_list():
+        for i in data['ITEM_ID'].unique.tolist():
             list_of_lists = data[data['ITEM_ID'] == i]['tokens_position']
             list_of_tokens = [item for sublist in list_of_lists for item in sublist]
             list_of_tokens_padded = list_of_tokens + ([padding_index] * max_num_tokens)
