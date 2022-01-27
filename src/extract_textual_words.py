@@ -80,11 +80,11 @@ def extract():
         # dataset padding
         data = read_csv(reviews_path.format(args.dataset), sep='\t')
 
-        count_users = available_interactions.groupby('USER_ID').size().reset_index(name='counts')
+        count_users = data.groupby('USER_ID').size().reset_index(name='counts')
         count_users = count_users.sort_values(by='counts', ascending=False)
         max_reviews_users = count_users.head(1)['counts']
 
-        count_items = available_interactions.groupby('ITEM_ID').size().reset_index(name='counts')
+        count_items = data.groupby('ITEM_ID').size().reset_index(name='counts')
         count_items = count_items.sort_values(by='counts', ascending=False)
         max_reviews_items = count_items.head(1)['counts']
 
