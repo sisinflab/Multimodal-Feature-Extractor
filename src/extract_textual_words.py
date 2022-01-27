@@ -14,6 +14,7 @@ def parse_args():
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
     parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
     parser.add_argument('--max_tokens', type=int, default=100, help='max number of tokens')
+    parser.add_argument('--max_reviews', type=int, default=100, help='max number of reviews')
     parser.add_argument('--concat_tokens', type=bool, default=False, help='whether to concatenate tokens or not')
     parser.add_argument('--model_name', nargs='+', type=str, default=['word2vec-google-news-300'],
                         help='model for feature extraction')
@@ -113,7 +114,12 @@ def extract():
                     list_of_tokens_padded = list_of_tokens + ([padding_index] * (args.max_tokens - len(list_of_tokens)))
             else:
                 list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
-                            [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
+                        [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
+                if len(list_of_tokens_padded) > args.max_reviews:
+                    list_of_tokens_padded = list_of_tokens_padded[:args.max_reviews]
+                else:
+                    list_of_tokens_padded += (
+                                [[padding_index] * args.max_tokens] * (args.max_reviews - len(list_of_tokens_padded)))
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
@@ -127,6 +133,11 @@ def extract():
             else:
                 list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
                         [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
+                if len(list_of_tokens_padded) > args.max_reviews:
+                    list_of_tokens_padded = list_of_tokens_padded[:args.max_reviews]
+                else:
+                    list_of_tokens_padded += (
+                                [[padding_index] * args.max_tokens] * (args.max_reviews - len(list_of_tokens_padded)))
             items_tokens[str(i)] = list_of_tokens_padded
 
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
