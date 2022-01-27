@@ -150,6 +150,8 @@ def extract():
                                 [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
             items_tokens[str(i)] = list_of_tokens_padded
 
+        print(users_tokens['0'])
+
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
         with open('../data/{0}/{1}'.format(args.dataset, users_filename), 'w') as f:
             json.dump(users_tokens, f)
