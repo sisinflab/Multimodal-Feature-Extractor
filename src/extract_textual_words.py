@@ -14,7 +14,6 @@ def parse_args():
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
     parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
     parser.add_argument('--max_tokens', type=int, default=100, help='max number of tokens')
-    parser.add_argument('--max_reviews', type=int, default=100, help='max number of reviews')
     parser.add_argument('--concat_tokens', type=bool, default=False, help='whether to concatenate tokens or not')
     parser.add_argument('--model_name', nargs='+', type=str, default=['word2vec-google-news-300'],
                         help='model for feature extraction')
@@ -80,6 +79,17 @@ def extract():
 
         # dataset padding
         data = read_csv(reviews_path.format(args.dataset), sep='\t')
+
+        count_users = available_interactions.groupby('USER_ID').size().reset_index(name='counts')
+        count_users = count_users.sort_values(by='counts', ascending=False)
+        max_reviews_users = count_users.head(1)['counts']
+
+        count_items = available_interactions.groupby('ITEM_ID').size().reset_index(name='counts')
+        count_items = count_items.sort_values(by='counts', ascending=False)
+        max_reviews_items = count_items.head(1)['counts']
+
+        max_reviews = max([max_reviews_users, max_reviews_items])
+
         print('Loaded dataset from %s' % reviews_path.format(args.dataset))
         # data['num_tokens'] = data['tokens'].map(lambda x: len(x.split(' ')))
         data['num_tokens'] = data['tokens'].map(lambda x: create_vocabulary(x))
@@ -115,11 +125,11 @@ def extract():
             else:
                 list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
                         [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
-                if len(list_of_tokens_padded) > args.max_reviews:
-                    list_of_tokens_padded = list_of_tokens_padded[:args.max_reviews]
+                if len(list_of_tokens_padded) > max_reviews:
+                    list_of_tokens_padded = list_of_tokens_padded[:max_reviews]
                 else:
                     list_of_tokens_padded += (
-                                [[padding_index] * args.max_tokens] * (args.max_reviews - len(list_of_tokens_padded)))
+                                [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
@@ -133,11 +143,11 @@ def extract():
             else:
                 list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
                         [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
-                if len(list_of_tokens_padded) > args.max_reviews:
-                    list_of_tokens_padded = list_of_tokens_padded[:args.max_reviews]
+                if len(list_of_tokens_padded) > max_reviews:
+                    list_of_tokens_padded = list_of_tokens_padded[:max_reviews]
                 else:
                     list_of_tokens_padded += (
-                                [[padding_index] * args.max_tokens] * (args.max_reviews - len(list_of_tokens_padded)))
+                                [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
             items_tokens[str(i)] = list_of_tokens_padded
 
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
