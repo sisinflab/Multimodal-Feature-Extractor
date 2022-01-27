@@ -13,6 +13,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run feature extraction for words in text.")
     parser.add_argument('--gpu', type=int, default=0, help='GPU id to run experiments')
     parser.add_argument('--dataset', nargs='?', default='amazon_baby', help='dataset path')
+    parser.add_argument('--max_tokens', type=int, default=100, help='max number of tokens')
+    parser.add_argument('--concat_tokens', type=bool, default=False, help='whether to concatenate tokens or not')
     parser.add_argument('--model_name', nargs='+', type=str, default=['word2vec-google-news-300'],
                         help='model for feature extraction')
     parser.add_argument('--text_output_split', nargs='+', type=bool, default=[False],
@@ -37,6 +39,7 @@ import time
 import sys
 
 vocabulary = []
+
 
 # def pad(tokens, max_number):
 #     tokens_list = tokens.split(' ')
@@ -89,7 +92,8 @@ def extract():
         final_vocabulary_dict = {k: i for i, k in enumerate(final_vocabulary)}
 
         print('Starting tokens position calculation...')
-        data['tokens_position'] = data['tokens'].map(lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
+        data['tokens_position'] = data['tokens'].map(
+            lambda x, voc=final_vocabulary_dict: find_indices_vocabulary(x, voc))
         print('Tokens position calculation has ended!')
 
         print('Starting to write to tsv file...')
@@ -101,26 +105,36 @@ def extract():
         items_tokens = {}
         for u in data['USER_ID'].unique().tolist():
             list_of_lists = data[data['USER_ID'] == u]['tokens_position']
-            list_of_tokens = [item for sublist in list_of_lists for item in sublist]
-            if len(list_of_tokens) > 1000:
-                list_of_tokens_padded = list_of_tokens[:1000]
+            if args.concat_tokens:
+                list_of_tokens = [item for sublist in list_of_lists for item in sublist]
+                if len(list_of_tokens) > args.max_tokens:
+                    list_of_tokens_padded = list_of_tokens[:args.max_tokens]
+                else:
+                    list_of_tokens_padded = list_of_tokens + ([padding_index] * (args.max_tokens - len(list_of_tokens)))
             else:
-                list_of_tokens_padded = list_of_tokens + ([padding_index] * (1000 - len(list_of_tokens)))
+                list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
+                            [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
             list_of_lists = data[data['ITEM_ID'] == i]['tokens_position']
-            list_of_tokens = [item for sublist in list_of_lists for item in sublist]
-            if len(list_of_tokens) > 1000:
-                list_of_tokens_padded = list_of_tokens[:1000]
+            if args.concat_tokens:
+                list_of_tokens = [item for sublist in list_of_lists for item in sublist]
+                if len(list_of_tokens) > args.max_tokens:
+                    list_of_tokens_padded = list_of_tokens[:args.max_tokens]
+                else:
+                    list_of_tokens_padded = list_of_tokens + ([padding_index] * (args.max_tokens - len(list_of_tokens)))
             else:
-                list_of_tokens_padded = list_of_tokens + ([padding_index] * (1000 - len(list_of_tokens)))
+                list_of_tokens_padded = [item[:args.max_tokens] if len(item) > args.max_tokens else item + (
+                        [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
             items_tokens[str(i)] = list_of_tokens_padded
 
-        with open('../data/{0}/users_tokens.json'.format(args.dataset), 'w') as f:
+        users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
+        with open('../data/{0}/{1}'.format(args.dataset, users_filename), 'w') as f:
             json.dump(users_tokens, f)
 
-        with open('../data/{0}/items_tokens.json'.format(args.dataset), 'w') as f:
+        items_filename = 'items_tokens_concat.json' if args.concat_tokens else 'items_tokens_no_concat.json'
+        with open('../data/{0}/{1}'.format(args.dataset, items_filename), 'w') as f:
             json.dump(items_tokens, f)
 
         len_data = len(data)
