@@ -115,7 +115,7 @@ def extract():
         users_tokens = {}
         items_tokens = {}
         for u in data['USER_ID'].unique().tolist():
-            list_of_lists = data[data['USER_ID'] == u]['tokens_position']
+            list_of_lists = data[data['USER_ID'] == u]['tokens_position'].tolist()
             if args.concat_tokens:
                 list_of_tokens = [item for sublist in list_of_lists for item in sublist]
                 if len(list_of_tokens) > args.max_tokens:
@@ -133,7 +133,7 @@ def extract():
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
-            list_of_lists = data[data['ITEM_ID'] == i]['tokens_position']
+            list_of_lists = data[data['ITEM_ID'] == i]['tokens_position'].tolist()
             if args.concat_tokens:
                 list_of_tokens = [item for sublist in list_of_lists for item in sublist]
                 if len(list_of_tokens) > args.max_tokens:
