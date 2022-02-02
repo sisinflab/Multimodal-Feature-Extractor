@@ -151,6 +151,7 @@ def extract():
             items_tokens[str(i)] = list_of_tokens_padded
 
         print(users_tokens['0'])
+        exit()
 
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
         with open('../data/{0}/{1}'.format(args.dataset, users_filename), 'w') as f:
