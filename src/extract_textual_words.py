@@ -115,7 +115,7 @@ def extract():
         users_tokens = {}
         items_tokens = {}
         for u in data['USER_ID'].unique().tolist():
-            list_of_lists = data[data['USER_ID'] == u]['tokens_position']
+            list_of_lists = data[data['USER_ID'] == u]['tokens_position'].tolist()
             print(list_of_lists)
             exit()
             if args.concat_tokens:
