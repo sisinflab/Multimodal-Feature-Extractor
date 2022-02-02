@@ -115,7 +115,9 @@ def extract():
         users_tokens = {}
         items_tokens = {}
         for u in data['USER_ID'].unique().tolist():
-            list_of_lists = data[data['USER_ID'] == u]['tokens_position'].tolist()
+            list_of_lists = data[data['USER_ID'] == u]['tokens_position']
+            print(list_of_lists)
+            exit()
             if args.concat_tokens:
                 list_of_tokens = [item for sublist in list_of_lists for item in sublist]
                 if len(list_of_tokens) > args.max_tokens:
@@ -133,7 +135,7 @@ def extract():
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
-            list_of_lists = data[data['ITEM_ID'] == i]['tokens_position'].tolist()
+            list_of_lists = data[data['ITEM_ID'] == i]['tokens_position']
             if args.concat_tokens:
                 list_of_tokens = [item for sublist in list_of_lists for item in sublist]
                 if len(list_of_tokens) > args.max_tokens:
@@ -149,9 +151,6 @@ def extract():
                     list_of_tokens_padded += (
                                 [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
             items_tokens[str(i)] = list_of_tokens_padded
-
-        print(type(users_tokens['0']))
-        exit()
 
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
         with open('../data/{0}/{1}'.format(args.dataset, users_filename), 'w') as f:
