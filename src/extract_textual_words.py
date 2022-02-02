@@ -127,15 +127,11 @@ def extract():
                         [padding_index] * (args.max_tokens - len(item))) for item in list_of_lists]
                 if len(list_of_tokens_padded) > max_reviews:
                     list_of_tokens_padded = list_of_tokens_padded[:max_reviews]
-                    print(1)
-                    print(list_of_tokens_padded)
-                    exit()
                 else:
-                    list_of_tokens_padded += (
-                                [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
-                    print(2)
-                    print(list_of_tokens_padded)
-                    exit()
+                    padding_review = [padding_index] * args.max_tokens
+                    list_of_tokens_padded += (padding_review * (max_reviews - len(list_of_tokens_padded)))
+                print(list_of_tokens_padded)
+                exit()
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
