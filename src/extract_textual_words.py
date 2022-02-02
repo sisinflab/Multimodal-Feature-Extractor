@@ -131,8 +131,6 @@ def extract():
                     padding_review = [padding_index] * args.max_tokens
                     padding_review = [padding_review for _ in range(int(max_reviews - len(list_of_tokens_padded)))]
                     list_of_tokens_padded += padding_review
-                    print(list_of_tokens_padded)
-                    exit()
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
@@ -149,8 +147,9 @@ def extract():
                 if len(list_of_tokens_padded) > max_reviews:
                     list_of_tokens_padded = list_of_tokens_padded[:max_reviews]
                 else:
-                    list_of_tokens_padded += (
-                                [[padding_index] * args.max_tokens] * (max_reviews - len(list_of_tokens_padded)))
+                    padding_review = [padding_index] * args.max_tokens
+                    padding_review = [padding_review for _ in range(int(max_reviews - len(list_of_tokens_padded)))]
+                    list_of_tokens_padded += padding_review
             items_tokens[str(i)] = list_of_tokens_padded
 
         users_filename = 'users_tokens_concat.json' if args.concat_tokens else 'users_tokens_no_concat.json'
