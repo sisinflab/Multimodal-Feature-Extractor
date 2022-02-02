@@ -129,6 +129,8 @@ def extract():
                     list_of_tokens_padded = list_of_tokens_padded[:max_reviews]
                 else:
                     padding_review = [padding_index] * args.max_tokens
+                    print(padding_review * (max_reviews - len(list_of_tokens_padded)))
+                    exit()
                     list_of_tokens_padded += (padding_review * (max_reviews - len(list_of_tokens_padded)))
                 print(list_of_tokens_padded)
                 exit()
