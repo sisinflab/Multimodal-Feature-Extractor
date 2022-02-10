@@ -15,6 +15,7 @@ def parse_args():
                         help='whether output should be split')
     parser.add_argument('--normalize', type=bool, default=True, help='whether to normalize output or not')
     parser.add_argument('--column', nargs='?', default='REVIEW', help='column of the dataframe to encode')
+    parser.add_argument('--input_file', nargs='?', default='train_reviews', help='input filename')
     parser.add_argument('--print_each', type=int, default=100, help='print each n samples')
 
     return parser.parse_args()
@@ -40,15 +41,15 @@ def extract():
 
         if args.text_output_split[id_model]:
             # create directories for split
-            if not os.path.exists(text_features_dir.format(args.dataset, m.lower())):
-                os.makedirs(text_features_dir.format(args.dataset, m.lower()))
+            if not os.path.exists('../data/{0}/original/{1}_{2}'.format(args.dataset, args.input_file, m.lower())):
+                os.makedirs('../data/{0}/original/{1}_{2}'.format(args.dataset, args.input_file, m.lower()))
 
         # model setting
         text_model = SentenceTransformer(args.model_name[id_model])
 
         # dataset setting
-        data = read_csv(reviews_path.format(args.dataset), sep='\t')
-        print('Loaded dataset from %s' % reviews_path.format(args.dataset))
+        data = read_csv('../data/{0}/original/{1}.tsv'.format(args.dataset, args.input_file), sep='\t')
+        print('Loaded dataset from %s' % descriptions_path.format(args.dataset))
 
         # text features
         text_features = np.empty(
@@ -76,14 +77,14 @@ def extract():
         if args.text_output_split[id_model]:
             for d in range(len(data)):
                 save_np(npy=text_features[d],
-                        filename=text_features_dir.format(args.dataset, m.lower()) + str(d) + '.npy')
+                        filename='../data/{0}/original/{1}_{2}'.format(args.dataset, args.input_file, m.lower()) + str(d) + '.npy')
             print('Saved text features numpy to ==> %s' %
                   text_features_dir.format(args.dataset, m.lower()))
         else:
             save_np(npy=text_features,
-                    filename=text_features_path.format(args.dataset, m.lower()))
+                    filename='../data/{0}/original/{1}_{2}.npy'.format(args.dataset, args.input_file, m.lower()))
             print('Saved text features numpy to ==> %s' %
-                  text_features_path.format(args.dataset, m.lower()))
+                  '../data/{0}/original/{1}_{2}.npy'.format(args.dataset, args.input_file, m.lower()))
 
 
 if __name__ == '__main__':
