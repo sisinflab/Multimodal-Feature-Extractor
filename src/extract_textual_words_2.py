@@ -40,7 +40,7 @@ def find_indices_vocabulary(tokens, voc):
     if ' ' not in tokens:
         return [voc[tokens]]
     else:
-        return list(itemgetter(*tokens)(voc))
+        return list(itemgetter(*tokens.split(' '))(voc))
 
 
 def extract():
@@ -80,7 +80,7 @@ def extract():
         users_tokens = {}
         items_tokens = {}
         for u in data['USER_ID'].unique().tolist():
-            list_of_tokens = ' '.join(data[data['USER_ID'] == u]['tokens']).split(' ')
+            list_of_tokens = ' '.join(data[data['USER_ID'] == u]['tokens'])
             list_of_tokens = find_indices_vocabulary(list_of_tokens, vocabulary_dict_users)
             if len(list_of_tokens) > args.max_tokens:
                 list_of_tokens_padded = list_of_tokens[:args.max_tokens]
@@ -90,7 +90,7 @@ def extract():
             users_tokens[str(u)] = list_of_tokens_padded
 
         for i in data['ITEM_ID'].unique().tolist():
-            list_of_tokens = ' '.join(data[data['ITEM_ID'] == i]['tokens']).split(' ')
+            list_of_tokens = ' '.join(data[data['ITEM_ID'] == i]['tokens'])
             list_of_tokens = find_indices_vocabulary(list_of_tokens, vocabulary_dict_items)
             if len(list_of_tokens) > args.max_tokens:
                 list_of_tokens_padded = list_of_tokens[:args.max_tokens]
