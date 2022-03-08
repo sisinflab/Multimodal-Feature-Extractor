@@ -12,7 +12,7 @@ sentiment_pipeline = pipeline(task="sentiment-analysis", model="nlptown/bert-bas
 model = list(sentiment_pipeline.model.children())[-3]
 model.eval()
 model.to(device)
-tokenizer = sentiment_pipeline.tokenizer.to(device)
+tokenizer = sentiment_pipeline.tokenizer
 
 if not os.path.exists(f'../data/{dataset}/reviews/'):
     os.makedirs(f'../data/{dataset}/reviews/')
