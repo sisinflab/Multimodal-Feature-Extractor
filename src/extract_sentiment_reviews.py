@@ -15,8 +15,7 @@ if not os.path.exists(f'../data/{dataset}/reviews/'):
     os.makedirs(f'../data/{dataset}/reviews/')
 with tqdm(total=len(train_reviews)) as t:
     for idx, row in train_reviews.iterrows():
-        inputs = tokenizer.encode_plus(row[2], add_special_tokens=True, truncation=True, padding="max_length",
-                                       return_attention_mask=True, return_tensors="pt")
+        inputs = tokenizer.encode_plus(row[2], add_special_tokens=True, truncation=True, return_tensors="pt")
         np.save(f'../data/{dataset}/reviews/{row[1]}_{row[0]}.npy',
                 model(**inputs).pooler_output.detach().cpu().numpy())
         t.update()
