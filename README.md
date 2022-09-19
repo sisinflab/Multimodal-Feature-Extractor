@@ -7,6 +7,7 @@ This repository was used in:
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (accepted at CVFAD@CVPR2021)](https://github.com/sisinflab/CNNs-in-VRSs)
 - [V-Elliot: Design, Evaluate and Tune Visual Recommender Systems (accepted at RecSys2021)](https://github.com/sisinflab/elliot)
 - [Leveraging Content-Style Item Representation for Visual Recommendation (accepted at ECIR2022)](https://github.com/sisinflab/Content-Style-VRSs)
+- [Reshaping Graph Recommendation with Edge Graph Collaborative Filtering and Customer Reviews (accepted at DL4SR@CIKM2022)](https://github.com/sisinflab/Edge-Graph-Collaborative-Filtering)
 
 **Table of Contents:**
 - [Requirements](#requirements)
