@@ -9,7 +9,7 @@ List of publications that used the codes from this repository:
 - [Leveraging Content-Style Item Representation for Visual Recommendation (accepted at ECIR2022)](https://github.com/sisinflab/Content-Style-VRSs)
 - [Reshaping Graph Recommendation with Edge Graph Collaborative Filtering and Customer Reviews (accepted at DL4SR@CIKM2022)](https://github.com/sisinflab/Edge-Graph-Collaborative-Filtering)
 
-The list will be constantly updated. If some of your works is missing, please contact me (daniele.malitesta@poliba.it)!
+The list will be constantly updated. If any of your works is missing, please contact me (daniele.malitesta@poliba.it)!
 
 ... and remember to cite us:
 
