@@ -2,12 +2,31 @@
 
 This repository provides a Python implementation to extract multimodal features from images and texts, either high-level ones from pretrained deep learning models (e.g., CNNs-extracted embeddings), or low-level ones (e.g., color and shape).
 
-This repository was used in:
+List of publications that used the codes from this repository:
 
 - [A Study on the Relative Importance of Convolutional Neural Networks in Visually-Aware Recommender Systems (accepted at CVFAD@CVPR2021)](https://github.com/sisinflab/CNNs-in-VRSs)
 - [V-Elliot: Design, Evaluate and Tune Visual Recommender Systems (accepted at RecSys2021)](https://github.com/sisinflab/elliot)
 - [Leveraging Content-Style Item Representation for Visual Recommendation (accepted at ECIR2022)](https://github.com/sisinflab/Content-Style-VRSs)
 - [Reshaping Graph Recommendation with Edge Graph Collaborative Filtering and Customer Reviews (accepted at DL4SR@CIKM2022)](https://github.com/sisinflab/Edge-Graph-Collaborative-Filtering)
+
+The list will be constantly updated. If some of your works is missing, please contact me (daniele.malitesta@poliba.it)!
+
+... and remember to cite us:
+
+```
+@inproceedings{DBLP:conf/cvpr/DeldjooNMM21,
+  author    = {Yashar Deldjoo and
+               Tommaso Di Noia and
+               Daniele Malitesta and
+               Felice Antonio Merra},
+  title     = {A Study on the Relative Importance of Convolutional Neural Networks
+               in Visually-Aware Recommender Systems},
+  booktitle = {{CVPR} Workshops},
+  pages     = {3961--3967},
+  publisher = {Computer Vision Foundation / {IEEE}},
+  year      = {2021}
+}
+```
 
 **Table of Contents:**
 - [Requirements](#requirements)
