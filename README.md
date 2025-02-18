@@ -1,5 +1,7 @@
 # Multimodal Feature Extractor
 
+**DISCLAIMER** This repository is no longer mantained. Please refer to our framework [Ducho](https://github.com/sisinflab/Ducho) for an improved and more recent version of this project.
+
 This repository provides a Python implementation to extract multimodal features from images and texts, either high-level ones from pretrained deep learning models (e.g., CNNs-extracted embeddings), or low-level ones (e.g., color and shape).
 
 List of publications that used the codes from this repository:
